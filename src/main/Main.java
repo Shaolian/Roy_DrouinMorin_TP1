@@ -1,13 +1,89 @@
 package main;
 
 import controller.GameController;
+import model.Grid;
 
 public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		GameController controller = new GameController();
-		System.out.println("Hello World");
+		//System.out.println("Hello World");
+		gridTest();
+	}
+	
+	private static void printGrid(Grid g)
+	{
+		for (int k = 0; k < 6; k++)
+		{
+			for (int i = 0; i < 7; i++)
+			{
+				System.out.print(g.gameGrid[k][i]);
+			}
+			System.out.println();
+		}
+		System.out.println();
+		System.out.println();
+		
+	}
+	
+	private static void gridTest()
+	{
+		Grid g = new Grid();
+		printGrid(g);
+		
+		makeMove(2, 1, g);
+		makeMove(2, 2, g);
+		makeMove(2, 2, g);
+		makeMove(2, 3, g);
+		makeMove(2, 3, g);
+		makeMove(2, 3, g);
+		makeMove(2, 4, g);
+		makeMove(2, 4, g);
+		makeMove(2, 4, g);
+		makeMove(2, 4, g);
+		makeMove(2, 5, g);
+		makeMove(2, 5, g);
+		makeMove(2, 5, g);
+		makeMove(2, 5, g);
+		makeMove(2, 5, g);
+		makeMove(2, 6, g);
+		makeMove(2, 6, g);
+		makeMove(2, 6, g);
+		makeMove(2, 6, g);
+		makeMove(2, 6, g);
+		makeMove(2, 6, g);
+		makeMove(2, 7, g);
+		makeMove(2, 7, g);
+		makeMove(2, 7, g);
+		makeMove(2, 7, g);
+		makeMove(2, 7, g);
+		makeMove(2, 7, g);
+		makeMove(2, 7, g);
+		makeMove(2, 8, g);
+		makeMove(2, 8, g);
+		makeMove(2, 8, g);
+		makeMove(2, 8, g);
+		makeMove(2, 8, g);
+		makeMove(2, 8, g);
+		makeMove(2, 8, g);
+		makeMove(2, 8, g);
+		
+		
+		
+		
+	}
+	
+	private static void makeMove(int _player, int _column, Grid _g)
+	{
+		if(_g.placeToken(_player, _column))
+		{
+			printGrid(_g);
+		}
+		else
+		{
+			System.out.println("invalid move");
+		}
 	}
 	
 }
