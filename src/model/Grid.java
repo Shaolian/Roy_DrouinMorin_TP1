@@ -32,15 +32,39 @@ public class Grid {
 		gameGrid = new int[row][column];
 	}
 	
-	public void placeToken(int _player, int _column)
+	public boolean placeToken(int _player, int _column)
 	{
-		for (int i = 0; i <= row; i ++)
+		if(checkIfValidColumn(_column) == true)
 		{
-			if (i == row || gameGrid[i + 1][_column] != EMPTY)
+			for (int i = 0; i < row; i ++)
 			{
-				gameGrid[i][_column] = _player;
+				if (i == row - 1)
+				{
+					gameGrid[i][_column - 1] = _player;
+					return true;
+				}
+				else if (gameGrid[i + 1][_column - 1] != EMPTY)
+				{
+					gameGrid[i][_column - 1] = _player;
+					return true;
+				}
 			}
+			
 		}
+		return false;
+	}
+	
+	private boolean checkIfValidColumn(int _column)
+	{
+		boolean valid = true;
+		
+		if (gameGrid[row - 1][_column - 1] != EMPTY || _column > column)
+		{
+			valid = false;
+		}
+		
+		return valid;
+				
 	}
 	
 }
