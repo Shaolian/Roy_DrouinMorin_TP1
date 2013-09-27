@@ -2,27 +2,27 @@ package controller;
 
 import java.awt.EventQueue;
 
-import view.Frame;
 import model.Grid;
+import view.GameView;
 
 public class GameController {
-	private Frame frame;
+	private GameView gameView;
 	private Grid grid;
-	
-	public void GameController()
-	{
-		//frame = new Frame();
+
+	public GameController() {
 		grid = new Grid();
+		startGameView();
+	}
+
+	private void startGameView() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Frame frame = new Frame();
-					frame.setVisible(true);
+					gameView = new GameView();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
-		
 	}
 }
