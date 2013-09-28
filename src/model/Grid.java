@@ -108,6 +108,7 @@ public class Grid {
 			if (_row - nbAligned < 0)
 			{
 				keepGoing = false;
+				
 			}
 		}
 		
