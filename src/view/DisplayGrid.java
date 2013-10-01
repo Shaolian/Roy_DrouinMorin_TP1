@@ -2,15 +2,17 @@ package view;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 
 public class DisplayGrid extends JPanel
 {
 	
-	private Map<MapPosition, JButton> displayGrid;
+	private HashMap<MapPosition, JLabel> displayGrid;
 	private int sizeX;
 	private int sizeY;
 	private ActionListener actionListener;
@@ -32,6 +34,7 @@ public class DisplayGrid extends JPanel
 					"The size passed in constructor equal or below 0.");
 		}
 		
+		displayGrid = new HashMap<MapPosition, JLabel>();
 		sizeX = _sizeX;
 		sizeY = _sizeY;
 		actionListener = _actionListener;
@@ -39,7 +42,7 @@ public class DisplayGrid extends JPanel
 		populateDisplayGrid();
 	}
 	
-	public JButton getFromGrid(int x, int y)
+	public JLabel getFromGrid(int x, int y)
 	{
 		if (x < 0 || x > sizeX)
 		{
@@ -64,19 +67,28 @@ public class DisplayGrid extends JPanel
 	
 	private void populateDisplayGrid()
 	{
-		for (int x = 0; x < sizeX; x++)
+		for (int y = 0; y < sizeY; y++)
 		{
-			for (int y = 0; y < sizeY; y++)
+			for (int x = 0; x < sizeX + 1; x++)
 			{
-				// TODO set all parameters for JButton
-				JButton toSet = new JButton();
-				toSet.addActionListener(actionListener);
-				
-				String actionCommand;
-				actionCommand = x + "," + y;
-				toSet.setActionCommand(actionCommand);
-				
-				this.add(toSet);
+				if (y == 0)
+				{
+					// TODO set all parameters for JButton
+					JButton toSet = new JButton();
+					toSet.addActionListener(actionListener);
+					
+					String actionCommand;
+					actionCommand = x + "," + y;
+					toSet.setActionCommand(actionCommand);
+					
+					this.add(toSet);
+				}
+				else
+				{
+					JLabel toSet = new JLabel();
+					this.add(toSet);
+					displayGrid.put(new MapPosition(x, y), toSet);
+				}
 			}
 		}
 	}

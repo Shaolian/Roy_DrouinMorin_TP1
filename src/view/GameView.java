@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.SpringLayout;
 import javax.swing.BoxLayout;
 import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
 public class GameView
 {
@@ -48,8 +49,11 @@ public class GameView
 		JMenuBar menuBar = new JMenuBar();
 		frmConnect.getContentPane().add(menuBar, BorderLayout.NORTH);
 		
-		JMenu mnStuff = new JMenu("Stuff");
-		menuBar.add(mnStuff);
+		JMenu mnGame = new JMenu("Game");
+		menuBar.add(mnGame);
+		
+		JMenuItem mntmGiveUp = new JMenuItem("Give Up");
+		mnGame.add(mntmGiveUp);
 		
 		JPanel mainPanel = new JPanel();
 		frmConnect.getContentPane().add(mainPanel, BorderLayout.CENTER);
