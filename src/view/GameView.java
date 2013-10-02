@@ -52,8 +52,14 @@ public class GameView
 		JMenu mnGame = new JMenu("Game");
 		menuBar.add(mnGame);
 		
+		JMenuItem mntmNewGame = new JMenuItem("New Game");
+		mnGame.add(mntmNewGame);
+		
 		JMenuItem mntmGiveUp = new JMenuItem("Give Up");
 		mnGame.add(mntmGiveUp);
+		
+		JMenu mnAbout = new JMenu("About");
+		menuBar.add(mnAbout);
 		
 		JPanel mainPanel = new JPanel();
 		frmConnect.getContentPane().add(mainPanel, BorderLayout.CENTER);
@@ -65,10 +71,6 @@ public class GameView
 		sl_mainPanel.putConstraint(SpringLayout.SOUTH, ButtonContainer, -10, SpringLayout.SOUTH, mainPanel);
 		sl_mainPanel.putConstraint(SpringLayout.EAST, ButtonContainer, -10, SpringLayout.EAST, mainPanel);
 		mainPanel.add(ButtonContainer);
-		
-		JButton btnNewButton = new JButton("New button");
-		btnNewButton.addActionListener(buttonListener);
-		ButtonContainer.add(btnNewButton);
 		
 		sl_mainPanel.putConstraint(SpringLayout.NORTH, displayGrid, 10, SpringLayout.NORTH, mainPanel);
 		sl_mainPanel.putConstraint(SpringLayout.SOUTH, displayGrid, -6, SpringLayout.NORTH, ButtonContainer);
