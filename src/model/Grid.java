@@ -37,16 +37,27 @@ public class Grid {
 	{
 		if(checkIfValidColumn(_column) == true)
 		{
+			int win;
 			for (int i = 0; i < row; i ++)
 			{
 				if (i == row - 1)
 				{
 					gameGrid[i][_column - 1] = _player;
+					win = checkForAWinner();
+					if (win != 0)
+					{
+						System.out.println("Palyer " + win + " wins!");
+					}
 					return true;
 				}
 				else if (gameGrid[i + 1][_column - 1] != EMPTY)
 				{
 					gameGrid[i][_column - 1] = _player;
+					win = checkForAWinner();
+					if (win != 0)
+					{
+						System.out.println("Palyer " + win + " wins!");
+					}
 					return true;
 				}
 			}
@@ -76,20 +87,43 @@ public class Grid {
 	{
 		int winner = 0;
 		
-		lookAtPlayer(PLAYER_1);
-		lookAtPlayer(PLAYER_2);
+		if (lookAtPlayer(PLAYER_1) != 0)
+		{
+			winner = PLAYER_1;
+		}
+		
+		if (lookAtPlayer(PLAYER_2) != 0)
+		{
+			winner = PLAYER_2;
+		}
 		
 		return winner;
 	}
 	
 	private int lookAtPlayer(int _player)
 	{
-		for (int k = 0; k < 6; k++)
+		for (int k = 0; k < column; k++)
 		{
-			for (int i = 0; i < 7; i++)
+			for (int i = 0; i < row; i++)
 			{
-				if (gameGrid[k][i] == _player)
+				if (gameGrid[i][k] == _player)
 				{
+					if (checkUp(i, k, _player) == true)
+					{
+						return _player;
+					}
+					else if (checkUpRight(i, k, _player) == true)
+					{
+						return _player;
+					}
+					else if (checkRight(i, k, _player) == true)
+					{
+						return _player;
+					}
+					else if (checkDownRight(i, k, _player) == true)
+					{
+						return _player;
+					}
 					
 				}
 			}
@@ -102,7 +136,7 @@ public class Grid {
 	{
 		boolean keepGoing = true;
 		int nbAligned = 0;
-		
+
 		while (keepGoing == true && nbAligned < nbToAlign)
 		{
 			if (_row - nbAligned < 0)
@@ -110,6 +144,79 @@ public class Grid {
 				keepGoing = false;
 				
 			}
+			else if (gameGrid[_row - nbAligned][_column] != _player)
+			{
+				keepGoing = false;
+			}
+			
+			nbAligned = nbAligned + 1;
+		}
+		
+		return keepGoing;
+	}
+	
+	private boolean checkUpRight(int _row, int _column, int _player)
+	{
+		boolean keepGoing = true;
+		int nbAligned = 0;
+
+		while (keepGoing == true && nbAligned < nbToAlign)
+		{
+			if (_row - nbAligned < 0 || _column + nbAligned >= column)
+			{
+				keepGoing = false;
+				
+			}
+			else if (gameGrid[_row - nbAligned][_column + nbAligned] != _player)
+			{
+				keepGoing = false;
+			}
+			
+			nbAligned = nbAligned + 1;
+		}
+		
+		return keepGoing;
+	}
+	
+	private boolean checkRight(int _row, int _column, int _player)
+	{
+		boolean keepGoing = true;
+		int nbAligned = 0;
+		while (keepGoing == true && nbAligned < nbToAlign)
+		{
+			if (_column + nbAligned >= column)
+			{
+				keepGoing = false;
+				
+			}
+			else if (gameGrid[_row][_column + nbAligned] != _player)
+			{
+				keepGoing = false;
+			}
+			
+			nbAligned = nbAligned + 1;
+		}
+		
+		return keepGoing;
+	}
+	
+	private boolean checkDownRight(int _row, int _column, int _player)
+	{
+		boolean keepGoing = true;
+		int nbAligned = 0;
+		while (keepGoing == true && nbAligned < nbToAlign)
+		{
+			if (_row + nbAligned >= row || _column + nbAligned >= column)
+			{
+				keepGoing = false;
+				
+			}
+			else if (gameGrid[_row + nbAligned][_column + nbAligned] != _player)
+			{
+				keepGoing = false;
+			}
+			
+			nbAligned = nbAligned + 1;
 		}
 		
 		return keepGoing;

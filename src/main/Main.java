@@ -32,42 +32,16 @@ public class Main {
 		Grid g = new Grid();
 		printGrid(g);
 		
+		makeMove(1, 4, g);
+		makeMove(1, 4, g);
+		makeMove(1, 4, g);
+		makeMove(1, 3, g);
+		makeMove(1, 3, g);
+		makeMove(1, 2, g);
 		makeMove(2, 1, g);
 		makeMove(2, 2, g);
-		makeMove(2, 2, g);
-		makeMove(2, 3, g);
-		makeMove(2, 3, g);
 		makeMove(2, 3, g);
 		makeMove(2, 4, g);
-		makeMove(2, 4, g);
-		makeMove(2, 4, g);
-		makeMove(2, 4, g);
-		makeMove(2, 5, g);
-		makeMove(2, 5, g);
-		makeMove(2, 5, g);
-		makeMove(2, 5, g);
-		makeMove(2, 5, g);
-		makeMove(2, 6, g);
-		makeMove(2, 6, g);
-		makeMove(2, 6, g);
-		makeMove(2, 6, g);
-		makeMove(2, 6, g);
-		makeMove(2, 6, g);
-		makeMove(2, 7, g);
-		makeMove(2, 7, g);
-		makeMove(2, 7, g);
-		makeMove(2, 7, g);
-		makeMove(2, 7, g);
-		makeMove(2, 7, g);
-		makeMove(2, 7, g);
-		makeMove(2, 8, g);
-		makeMove(2, 8, g);
-		makeMove(2, 8, g);
-		makeMove(2, 8, g);
-		makeMove(2, 8, g);
-		makeMove(2, 8, g);
-		makeMove(2, 8, g);
-		makeMove(2, 8, g);
 		
 		
 		
