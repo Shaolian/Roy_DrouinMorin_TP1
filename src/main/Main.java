@@ -9,7 +9,7 @@ public class Main {
 		// TODO Auto-generated method stub
 		GameController controller = new GameController();
 		//System.out.println("Hello World");
-		gridTest();
+		//gridTest();
 	}
 	
 	private static void printGrid(Grid g)
@@ -26,7 +26,8 @@ public class Main {
 		System.out.println();
 		
 	}
-	
+	/**
+	@Deprecated
 	private static void gridTest()
 	{
 		Grid g = new Grid();
@@ -59,5 +60,5 @@ public class Main {
 			System.out.println("invalid move");
 		}
 	}
-	
+	*/
 }

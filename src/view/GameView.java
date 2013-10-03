@@ -1,39 +1,52 @@
 package view;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import javax.swing.JMenuBar;
-import java.awt.GridLayout;
-import java.awt.event.ActionListener;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
-import javax.swing.SpringLayout;
-import javax.swing.BoxLayout;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
+import java.awt.event.ActionListener;
 
-public class GameView
+import model.*;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SpringLayout;
+
+import controller.GameController;
+
+public class GameView implements IWatcher
 {
 	
 	private JFrame frmConnect;
 	private DisplayGrid displayGrid;
+	private GameController controller;
+	
 	private ActionListener buttonListener = new ActionListener()
 	{
 		public void actionPerformed(ActionEvent arg0)
 		{
-			System.out.println(arg0.getActionCommand());
+			gridButtonPressed(arg0.getActionCommand());
 		}
 	};
+	private JLabel lblPlayerindicator;
 	
 	/**
 	 * Create the application.
 	 */
-	public GameView(int rows, int columns)
+	public GameView(int _columns, int _rows)
 	{
-		//TODO Adjust to be able to receive size in parameter
-		displayGrid = new DisplayGrid(rows, columns, buttonListener);
+		
+		displayGrid = new DisplayGrid(_columns, _rows, buttonListener);
 		initialize();
+	}
+	
+	public void setGameController(GameController _controller)
+	{
+		controller = _controller;
 	}
 	
 	/**
@@ -52,32 +65,81 @@ public class GameView
 		JMenu mnGame = new JMenu("Game");
 		menuBar.add(mnGame);
 		
-		JMenuItem mntmNewGame = new JMenuItem("New Game");
-		mnGame.add(mntmNewGame);
-		
 		JMenuItem mntmGiveUp = new JMenuItem("Give Up");
+		mntmGiveUp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				controller.newGame();
+			}
+		});
 		mnGame.add(mntmGiveUp);
 		
 		JMenu mnAbout = new JMenu("About");
 		menuBar.add(mnAbout);
 		
+		JMenuItem mntmAbout = new JMenuItem("About");
+		mnAbout.add(mntmAbout);
+		
 		JPanel mainPanel = new JPanel();
 		frmConnect.getContentPane().add(mainPanel, BorderLayout.CENTER);
 		SpringLayout sl_mainPanel = new SpringLayout();
+		sl_mainPanel.putConstraint(SpringLayout.NORTH, displayGrid, 45, SpringLayout.NORTH, mainPanel);
+		sl_mainPanel.putConstraint(SpringLayout.WEST, displayGrid, 10, SpringLayout.WEST, mainPanel);
+		sl_mainPanel.putConstraint(SpringLayout.SOUTH, displayGrid, -10, SpringLayout.SOUTH, mainPanel);
+		sl_mainPanel.putConstraint(SpringLayout.EAST, displayGrid, -10, SpringLayout.EAST, mainPanel);
 		mainPanel.setLayout(sl_mainPanel);
 		
-		JPanel ButtonContainer = new JPanel();
-		sl_mainPanel.putConstraint(SpringLayout.WEST, ButtonContainer, 10, SpringLayout.WEST, mainPanel);
-		sl_mainPanel.putConstraint(SpringLayout.SOUTH, ButtonContainer, -10, SpringLayout.SOUTH, mainPanel);
-		sl_mainPanel.putConstraint(SpringLayout.EAST, ButtonContainer, -10, SpringLayout.EAST, mainPanel);
-		mainPanel.add(ButtonContainer);
+		JPanel panel = new JPanel();
+		sl_mainPanel.putConstraint(SpringLayout.NORTH, panel, 10, SpringLayout.NORTH, mainPanel);
+		sl_mainPanel.putConstraint(SpringLayout.WEST, panel, 0, SpringLayout.WEST, displayGrid);
+		sl_mainPanel.putConstraint(SpringLayout.SOUTH, panel, -6, SpringLayout.NORTH, displayGrid);
+		sl_mainPanel.putConstraint(SpringLayout.EAST, panel, 0, SpringLayout.EAST, displayGrid);
+		mainPanel.add(panel);
 		
-		sl_mainPanel.putConstraint(SpringLayout.NORTH, displayGrid, 10, SpringLayout.NORTH, mainPanel);
-		sl_mainPanel.putConstraint(SpringLayout.SOUTH, displayGrid, -6, SpringLayout.NORTH, ButtonContainer);
-		sl_mainPanel.putConstraint(SpringLayout.WEST, displayGrid, 10, SpringLayout.WEST, mainPanel);
-		sl_mainPanel.putConstraint(SpringLayout.EAST, displayGrid, -10, SpringLayout.EAST, mainPanel);
+		lblPlayerindicator = new JLabel("playerIndicator");
+		panel.add(lblPlayerindicator);
 		mainPanel.add(displayGrid);
+		lblPlayerindicator.setText("Player 1 (blue) starts.");
 		
 		frmConnect.setVisible(true);
+	}
+	
+	private void gridButtonPressed(String _actionCommand)
+	{
+		//Appeler controlleur
+		controller.placeToken(Integer.parseInt(_actionCommand));
+	}
+	
+	public void gridModelChanged(int player, int _row, int _column)
+	{
+		if (player == 1)
+		{
+			JLabel toChange = displayGrid.getFromGrid(_row, _column);
+			
+			if (toChange == null)
+			{
+				throw new NullPointerException ("La valeur de retour de la Map est nulle encore!");
+			}
+			toChange.setBackground(Color.blue);
+			
+			lblPlayerindicator.setText("It's player 2's turn (red)");
+		}
+		else
+		{
+			displayGrid.getFromGrid(_row, _column).setBackground(Color.red);
+			
+			lblPlayerindicator.setText("It's player 1's turn (blue)");
+		}
+	}
+	
+	public void resetDisplayGrid(int _columns, int _rows)
+	{
+		displayGrid = new DisplayGrid(_columns, _rows, buttonListener);
+	}
+
+	@Override
+	public void gameEnd(int winner)
+	{
+		// TODO Auto-generated method stub
+		JOptionPane.showMessageDialog(frmConnect, "Game ends, player " + winner + " wins!");
 	}
 }

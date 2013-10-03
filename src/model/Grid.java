@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+import view.IWatcher;
+
 public class Grid {
 	public int[][] gameGrid; 
 	
@@ -14,12 +17,16 @@ public class Grid {
 	private int row;
 	private int column;
 	private int nbToAlign;
+	private ArrayList<IWatcher> watchers;
+	private int currentPlayer;
 	
-	public Grid(int _row, int _column, int _nbToAlign)
+	public Grid(int _column, int _row,  int _nbToAlign)
 	{
 		row = _row;
 		column = _column;
 		nbToAlign = _nbToAlign;
+		watchers = new ArrayList<IWatcher>();
+		currentPlayer = 1;
 		
 		gameGrid = new int[row][column];
 	}
@@ -33,7 +40,7 @@ public class Grid {
 		gameGrid = new int[row][column];
 	}
 	
-	public boolean placeToken(int _player, int _column)
+	public boolean placeToken(int _column)
 	{
 		if(checkIfValidColumn(_column) == true)
 		{
@@ -42,28 +49,44 @@ public class Grid {
 			{
 				if (i == row - 1)
 				{
-					gameGrid[i][_column - 1] = _player;
+					gameGrid[i][_column - 1] = currentPlayer;
 					win = checkForAWinner();
+					
+					notifyOfGameChange(i, _column);
+					
 					if (win != 0)
 					{
 						System.out.println("Palyer " + win + " wins!");
+						//notifyOfGameChange(i, _column);
+						notifyOfGameEnd();
 					}
 					return true;
 				}
 				else if (gameGrid[i + 1][_column - 1] != EMPTY)
 				{
-					gameGrid[i][_column - 1] = _player;
+					gameGrid[i][_column - 1] = currentPlayer;
 					win = checkForAWinner();
+					
+					notifyOfGameChange(i, _column);
+					
 					if (win != 0)
 					{
 						System.out.println("Palyer " + win + " wins!");
+						//notifyOfGameChange(i, _column);
+						notifyOfGameEnd();
 					}
+					//toggleCurrentPlayer();
 					return true;
 				}
 			}
 			
 		}
 		return false;
+	}
+	
+	public void addWatcher (IWatcher _watcher)
+	{
+		watchers.add(_watcher);
 	}
 	
 	private boolean checkIfValidColumn(int _column)
@@ -81,6 +104,18 @@ public class Grid {
 		
 		return valid;
 				
+	}
+	
+	private void toggleCurrentPlayer()
+	{
+		if (currentPlayer == 1)
+		{
+			currentPlayer = 2;
+		}
+		else
+		{
+			currentPlayer = 1;
+		}
 	}
 	
 	private int checkForAWinner()
@@ -220,6 +255,26 @@ public class Grid {
 		}
 		
 		return keepGoing;
+	}
+	
+	private void notifyOfGameChange(int _row, int _column)
+	{
+		for (IWatcher w : watchers)
+		{
+			w.gridModelChanged(currentPlayer, _column - 1, _row);
+			toggleCurrentPlayer();
+		}
+	}
+
+	private void notifyOfGameEnd()
+	{
+		toggleCurrentPlayer();
+		// TODO Auto-generated method stub
+		for (IWatcher w : watchers)
+		{
+			w.gameEnd(currentPlayer);
+		}
+		
 	}
 	
 }

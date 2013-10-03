@@ -1,10 +1,11 @@
 package view;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
-import java.util.Map;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JButton;
@@ -13,95 +14,95 @@ public class DisplayGrid extends JPanel
 {
 	
 	private HashMap<MapPosition, JLabel> displayGrid;
-	private int sizeX;
-	private int sizeY;
+	private int numberOfColumns;
+	private int numberOfRows;
 	private ActionListener actionListener;
 	
 	public DisplayGrid(ActionListener _actionListener)
 	{
-		sizeX = 6;
-		sizeY = 6;
+		numberOfColumns = 6;
+		numberOfRows = 6;
 		actionListener = _actionListener;
 		setupPanel();
 		populateDisplayGrid();
 	}
 	
-	public DisplayGrid(int _sizeX, int _sizeY, ActionListener _actionListener)
+	public DisplayGrid(int _numberOfColumns, int _numberOfRows, ActionListener _actionListener)
 	{
-		if (_sizeX <= 0 || _sizeY <= 0)
+		if (_numberOfColumns <= 0 || _numberOfRows <= 0)
 		{
 			throw new IllegalArgumentException(
 					"The size passed in constructor equal or below 0.");
 		}
 		
 		displayGrid = new HashMap<MapPosition, JLabel>();
-		sizeX = _sizeX;
-		sizeY = _sizeY;
+		numberOfColumns = _numberOfColumns;
+		numberOfRows = _numberOfRows;
 		actionListener = _actionListener;
 		setupPanel();
 		populateDisplayGrid();
 	}
 	
-	public JLabel getFromGrid(int x, int y)
+	/**
+	 * Method that returns a label from the play grid.
+	 * @param _column The column in which the label is.
+	 * @param _row The row in which the label is.
+	 * @return Queried label from HashMap.
+	 * @throws ArrayindexOutOfBoundsException
+	 *  			When given coordinates that are out of the bounds of the grid 
+	 * 				(above the limit or below zero.)
+	 */
+	public JLabel getFromGrid(int _column, int _row)
 	{
-		if (x < 0 || x > sizeX)
+		if (_column < 0 || _column > numberOfColumns)
 		{
 			throw new ArrayIndexOutOfBoundsException(
-					"DisplayGrid map x coordinates were out of bounds.");
+					"DisplayGrid map column coordinates were out of bounds.");
 		}
-		else if (y < 0 || y > sizeY)
+		else if (_row < 0 || _row > numberOfRows)
 		{
 			throw new ArrayIndexOutOfBoundsException(
-					"DisplayGrid map y coordinates were out of bounds.");
+					"DisplayGrid map row coordinates were out of bounds.");
 		}
 		
-		return displayGrid.get(new MapPosition(x, y));
+		return displayGrid.get(new MapPosition(_column, _row));
 	}
 	
 	private void setupPanel()
 	{
 		// TODO set all parameters for JPanel
 		// Layout
-		this.setLayout(new GridLayout(sizeX, sizeY));
+		this.setLayout(new GridLayout(numberOfRows + 1, numberOfColumns));
 	}
 	
 	private void populateDisplayGrid()
 	{
-		for (int y = 0; y < sizeY; y++)
-		{
-			for (int x = 0; x < sizeX + 1; x++)
-			{
-				if (y == 0)
-				{
-					// TODO set all parameters for JButton
-					JButton toSet = new JButton();
-					toSet.addActionListener(actionListener);
-					
-					String actionCommand;
-					actionCommand = x + "," + y;
-					toSet.setActionCommand(actionCommand);
-					
-					this.add(toSet);
-				}
-				else
-				{
-					JLabel toSet = new JLabel();
-					this.add(toSet);
-					displayGrid.put(new MapPosition(x, y), toSet);
-				}
-			}
+		for (Integer column = 0; column < numberOfColumns; column ++){
+			// TODO set all parameters for JButton
+			JButton toSet = new JButton();
+			toSet.addActionListener(actionListener);
+			
+			String actionCommand;
+			actionCommand = column.toString();
+			toSet.setActionCommand(actionCommand);
+			
+			this.add(toSet);
 		}
-	}
-	
-	private class MapPosition
-	{
-		public int x;
-		public int y;
 		
-		public MapPosition(final int _x, final int _y)
+		for (Integer row = 0; row < numberOfRows; row++)
 		{
-			x = _x;
-			y = _y;
+			for (Integer column = 0; column < numberOfColumns; column++)
+			{
+				
+				JLabel toSet = new JLabel();
+				toSet.setBackground(Color.gray);
+				toSet.setBorder(BorderFactory.createLineBorder(Color.white));
+				toSet.setOpaque(true);
+				
+				this.add(toSet);
+				displayGrid.put(new MapPosition(column, row), toSet);
+				
+			}
 		}
 	}
 }
