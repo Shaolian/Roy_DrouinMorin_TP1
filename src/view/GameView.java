@@ -2,10 +2,11 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 
-import model.*;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -68,7 +69,7 @@ public class GameView implements IWatcher
 		JMenuItem mntmGiveUp = new JMenuItem("Give Up");
 		mntmGiveUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				controller.newGame();
+				controller.giveUp();
 			}
 		});
 		mnGame.add(mntmGiveUp);
@@ -77,6 +78,11 @@ public class GameView implements IWatcher
 		menuBar.add(mnAbout);
 		
 		JMenuItem mntmAbout = new JMenuItem("About");
+		mntmAbout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JOptionPane.showMessageDialog(frmConnect, "Made by : \n François Drouin Morin \n      & \n Jonathan Roy");
+			}
+		});
 		mnAbout.add(mntmAbout);
 		
 		JPanel mainPanel = new JPanel();
@@ -133,13 +139,39 @@ public class GameView implements IWatcher
 	
 	public void resetDisplayGrid(int _columns, int _rows)
 	{
-		displayGrid = new DisplayGrid(_columns, _rows, buttonListener);
+		for(int i = 0; i < _columns; i++ )
+		{
+			for(int k = 0; k < _rows; k++)
+			{
+				displayGrid.getFromGrid(i, k).setBackground(Color.gray);
+			}
+		}
+		
 	}
 
 	@Override
 	public void gameEnd(int winner)
 	{
 		// TODO Auto-generated method stub
-		JOptionPane.showMessageDialog(frmConnect, "Game ends, player " + winner + " wins!");
+		if (winner != 0)
+		{
+			JOptionPane.showMessageDialog(frmConnect, "Game ends, player " + winner + " wins!");
+		}
+		else
+		{
+			JOptionPane.showMessageDialog(frmConnect, "Game ends, it's a draw!");
+		}
+		
+		int dialogResult = JOptionPane.showConfirmDialog(frmConnect, "Do you want to have your revenge?", "New Game?", JOptionPane.YES_NO_OPTION);
+		if (dialogResult == JOptionPane.YES_OPTION)
+		{
+			controller.newGame();
+			lblPlayerindicator.setText("Player 1 (blue) starts.");
+		}
+		else
+		{
+			WindowEvent wev = new WindowEvent(frmConnect, WindowEvent.WINDOW_CLOSING);
+            Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(wev);
+		}
 	}
 }
