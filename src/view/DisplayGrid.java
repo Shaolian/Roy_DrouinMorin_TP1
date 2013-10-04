@@ -12,24 +12,11 @@ import javax.swing.JButton;
 
 public class DisplayGrid extends JPanel
 {
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private HashMap<MapPosition, JLabel> displayGrid;
 	private int numberOfColumns;
 	private int numberOfRows;
 	private ActionListener actionListener;
-	
-	public DisplayGrid(ActionListener _actionListener)
-	{
-		numberOfColumns = 6;
-		numberOfRows = 6;
-		actionListener = _actionListener;
-		setupPanel();
-		populateDisplayGrid();
-	}
 	
 	public DisplayGrid(int _numberOfColumns, int _numberOfRows, ActionListener _actionListener)
 	{
@@ -47,15 +34,6 @@ public class DisplayGrid extends JPanel
 		populateDisplayGrid();
 	}
 	
-	/**
-	 * Method that returns a label from the play grid.
-	 * @param _column The column in which the label is.
-	 * @param _row The row in which the label is.
-	 * @return Queried label from HashMap.
-	 * @throws ArrayindexOutOfBoundsException
-	 *  			When given coordinates that are out of the bounds of the grid 
-	 * 				(above the limit or below zero.)
-	 */
 	public JLabel getFromGrid(int _column, int _row)
 	{
 		if (_column < 0 || _column > numberOfColumns)
@@ -74,15 +52,12 @@ public class DisplayGrid extends JPanel
 	
 	private void setupPanel()
 	{
-		// TODO set all parameters for JPanel
-		// Layout
 		this.setLayout(new GridLayout(numberOfRows + 1, numberOfColumns));
 	}
 	
 	private void populateDisplayGrid()
 	{
 		for (Integer column = 0; column < numberOfColumns; column ++){
-			// TODO set all parameters for JButton
 			JButton toSet = new JButton();
 			toSet.addActionListener(actionListener);
 			

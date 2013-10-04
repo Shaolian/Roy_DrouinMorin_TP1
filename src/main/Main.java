@@ -23,7 +23,6 @@ public class Main {
 				good = false;
 			}
 			
-			
 			if (row < victory || column < victory)
 			{
 				good = false;

@@ -28,7 +28,6 @@ public class GameController {
 		rows = Grid.DEFAULT_ROW;
 		v = Grid.DEFAULT_NUMBER_TO_ALIGN;
 		
-		
 		startGameView();
 	}
 	
@@ -52,14 +51,12 @@ public class GameController {
 		grid.placeToken( _column + 1);
 	}
 	
-	// TODO Win game reset
 	public void newGame()
 	{
 		grid.reset();
 		gameView.resetDisplayGrid(columns, rows);
 	}
 	
-	// TODO Show about box
 	public void giveUp()
 	{
 		grid.notifyOfGameEnd();

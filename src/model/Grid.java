@@ -291,7 +291,7 @@ public class Grid {
 	public void notifyOfGameEnd()
 	{
 		toggleCurrentPlayer();
-		// TODO Auto-generated method stub
+		
 		for (IWatcher w : watchers)
 		{
 			w.gameEnd(currentPlayer);

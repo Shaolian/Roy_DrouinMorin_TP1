@@ -51,6 +51,7 @@ public class GameView implements IWatcher
 	}
 	
 	/**
+	 * AUTO-GENERATED
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize()
@@ -80,7 +81,7 @@ public class GameView implements IWatcher
 		JMenuItem mntmAbout = new JMenuItem("About");
 		mntmAbout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JOptionPane.showMessageDialog(frmConnect, "Made by : \n François Drouin Morin \n      & \n Jonathan Roy");
+				JOptionPane.showMessageDialog(frmConnect, "Made by : \n Francois Drouin Morin \n      & \n Jonathan Roy");
 			}
 		});
 		mnAbout.add(mntmAbout);

@@ -13,10 +13,6 @@ public class MapPosition
 		y = _y;
 	}
 	
-	// TODO Override hashCode
-	
-	// TODO Override equals
-	
 	public boolean equals(Object _input)
 	{
 		if (_input instanceof MapPosition)
