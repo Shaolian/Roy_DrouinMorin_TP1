@@ -1,9 +1,7 @@
 package controller;
 
 import java.awt.EventQueue;
-import java.util.ArrayList;
 
-import view.IWatcher;
 import model.Grid;
 import view.GameView;
 
@@ -14,13 +12,12 @@ public class GameController {
 	private int rows;
 	private int v;
 
-	public GameController() {
+	public GameController(int _rows, int _columns, int _nbAlign) {
 		
-		columns = 5;
-		rows = 10;
-		v = 4;
+		columns = _columns;
+		rows = _rows;
+		v = _nbAlign;
 		
-		//newGame();
 		grid = new Grid(columns, rows, v);
 		startGameView();
 	}
@@ -52,13 +49,13 @@ public class GameController {
 	// TODO Win game reset
 	public void newGame()
 	{
-		grid = new Grid(columns, rows, v);
+		grid.reset();
 		gameView.resetDisplayGrid(columns, rows);
 	}
 	
 	// TODO Show about box
-	public void showAbout()
+	public void giveUp()
 	{
-		
+		grid.notifyOfGameEnd();
 	}
 }

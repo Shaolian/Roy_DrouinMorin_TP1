@@ -12,7 +12,6 @@ public class Grid {
 	private static final int PLAYER_1 = 1;
 	private static final int PLAYER_2 = 2;
 	private static final int EMPTY = 0;
-	private static final int NOBODY = 0;
 	
 	private int row;
 	private int column;
@@ -57,9 +56,13 @@ public class Grid {
 					if (win != 0)
 					{
 						System.out.println("Palyer " + win + " wins!");
-						//notifyOfGameChange(i, _column);
 						notifyOfGameEnd();
 					}
+					else if(checkIfDraw())
+					{
+						notifyDraw();
+					}
+					
 					return true;
 				}
 				else if (gameGrid[i + 1][_column - 1] != EMPTY)
@@ -72,10 +75,12 @@ public class Grid {
 					if (win != 0)
 					{
 						System.out.println("Palyer " + win + " wins!");
-						//notifyOfGameChange(i, _column);
 						notifyOfGameEnd();
 					}
-					//toggleCurrentPlayer();
+					else if(checkIfDraw())
+					{
+						notifyDraw();
+					}
 					return true;
 				}
 			}
@@ -83,6 +88,8 @@ public class Grid {
 		}
 		return false;
 	}
+	
+
 	
 	public void addWatcher (IWatcher _watcher)
 	{
@@ -104,6 +111,19 @@ public class Grid {
 		
 		return valid;
 				
+	}
+	
+	private boolean checkIfDraw()
+	{
+		boolean draw = true;
+		for (int i = 0; i < column; i++)
+		{
+			if (gameGrid[0][i] == 0)
+			{
+				draw = false;
+			}
+		}
+		return draw;
 	}
 	
 	private void toggleCurrentPlayer()
@@ -266,7 +286,7 @@ public class Grid {
 		}
 	}
 
-	private void notifyOfGameEnd()
+	public void notifyOfGameEnd()
 	{
 		toggleCurrentPlayer();
 		// TODO Auto-generated method stub
@@ -274,6 +294,21 @@ public class Grid {
 		{
 			w.gameEnd(currentPlayer);
 		}
+		
+	}
+	
+	public void notifyDraw()
+	{
+		for (IWatcher w : watchers)
+		{
+			w.gameEnd(0);
+		}
+		
+	}
+	
+	public void reset()
+	{
+		gameGrid = new int[row][column];
 		
 	}
 	
