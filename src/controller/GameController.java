@@ -22,6 +22,16 @@ public class GameController {
 		startGameView();
 	}
 	
+	public GameController() {
+		grid = new Grid();
+		columns = Grid.DEFAULT_COLUMN;
+		rows = Grid.DEFAULT_ROW;
+		v = Grid.DEFAULT_NUMBER_TO_ALIGN;
+		
+		
+		startGameView();
+	}
+	
 	private GameController getController()
 	{
 		return this;

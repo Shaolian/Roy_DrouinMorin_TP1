@@ -6,9 +6,9 @@ import view.IWatcher;
 public class Grid {
 	public int[][] gameGrid; 
 	
-	private static final int DEFAULT_ROW = 6;
-	private static final int DEFAULT_COLUMN = 7;
-	private static final int DEFAULT_NUMBER_TO_ALIGN = 4;
+	public static final int DEFAULT_ROW = 6;
+	public static final int DEFAULT_COLUMN = 7;
+	public static final int DEFAULT_NUMBER_TO_ALIGN = 4;
 	private static final int PLAYER_1 = 1;
 	private static final int PLAYER_2 = 2;
 	private static final int EMPTY = 0;
@@ -35,6 +35,8 @@ public class Grid {
 		row = DEFAULT_ROW;
 		column = DEFAULT_COLUMN;
 		nbToAlign = DEFAULT_NUMBER_TO_ALIGN;
+		watchers = new ArrayList<IWatcher>();
+		currentPlayer = 1;
 		
 		gameGrid = new int[row][column];
 	}

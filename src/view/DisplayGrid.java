@@ -13,6 +13,10 @@ import javax.swing.JButton;
 public class DisplayGrid extends JPanel
 {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private HashMap<MapPosition, JLabel> displayGrid;
 	private int numberOfColumns;
 	private int numberOfRows;

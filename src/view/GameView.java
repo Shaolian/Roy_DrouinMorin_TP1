@@ -111,7 +111,6 @@ public class GameView implements IWatcher
 	
 	private void gridButtonPressed(String _actionCommand)
 	{
-		//Appeler controlleur
 		controller.placeToken(Integer.parseInt(_actionCommand));
 	}
 	
@@ -152,7 +151,6 @@ public class GameView implements IWatcher
 	@Override
 	public void gameEnd(int winner)
 	{
-		// TODO Auto-generated method stub
 		if (winner != 0)
 		{
 			JOptionPane.showMessageDialog(frmConnect, "Game ends, player " + winner + " wins!");
