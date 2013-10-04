@@ -40,13 +40,9 @@ public class GameController {
 	private void startGameView() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				try {
-					gameView = new GameView(columns, rows);
-					gameView.setGameController(getController());
-					grid.addWatcher(gameView);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				gameView = new GameView(columns, rows);
+				gameView.setGameController(getController());
+				grid.addWatcher(gameView);
 			}
 		});
 	}
