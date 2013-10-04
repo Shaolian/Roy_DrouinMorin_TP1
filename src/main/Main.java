@@ -1,5 +1,7 @@
 package main;
 
+import java.util.EnumMap;
+
 import controller.GameController;
 import model.Grid;
 
@@ -25,6 +27,18 @@ public class Main {
 		System.out.println();
 		System.out.println();
 		
+	}
+	
+	private static EnumMap<InputParameter,String> parseParameters(String[] _args)
+	{
+		EnumMap<InputParameter, String> output = new EnumMap<InputParameter, String>(InputParameter.class);
+		
+		for (int i = 0; i < _args.length; i++)
+		{
+			
+		}
+		
+		return output;
 	}
 	/**
 	@Deprecated
