@@ -9,8 +9,15 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		//GameController controller = new GameController(Integer.parseInt(args[0]),Integer.parseInt(args[1]),Integer.parseInt(args[2])); 
-		GameController controller = new GameController(6,7,4); 
+		//
+		if (args.length == 3)
+		{
+			GameController controller = new GameController(Integer.parseInt(args[0]),Integer.parseInt(args[1]),Integer.parseInt(args[2])); 
+		}
+		else
+		{
+			GameController controller = new GameController(6,7,4);
+		}
 	}
 	
 	private static void printGrid(Grid g)
@@ -26,18 +33,6 @@ public class Main {
 		System.out.println();
 		System.out.println();
 		
-	}
-	
-	private static EnumMap<InputParameter,String> parseParameters(String[] _args)
-	{
-		EnumMap<InputParameter, String> output = new EnumMap<InputParameter, String>(InputParameter.class);
-		
-		for (int i = 0; i < _args.length; i++)
-		{
-			
-		}
-		
-		return output;
 	}
 	/**
 	@Deprecated
